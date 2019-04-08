@@ -202,4 +202,3 @@ void showConfig()
   DebugF("compteur :"); Debugln(config.jeedom.adco); 
   DebugF("freq     :"); Debugln(config.jeedom.freq); 
 }
-

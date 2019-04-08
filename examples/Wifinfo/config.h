@@ -36,6 +36,14 @@
 #define CFG_EMON_DEFAULT_HOST "emoncms.org"
 #define CFG_EMON_DEFAULT_URL  "/input/post.json"
 
+#define CFG_MQTT_HOST_SIZE    32
+#define CFG_MQTT_USERNAME_SIZE   32
+#define CFG_MQTT_PASSWORD_SIZE   32
+#define CFG_MQTT_TOPIC_SIZE   64
+#define CFG_MQTT_DEFAULT_PORT 1883
+#define CFG_MQTT_DEFAULT_HOST "mqtt"
+#define CFG_MQTT_DEFAULT_TOPIC  "TeleInfo/values"
+
 #define CFG_JDOM_HOST_SIZE    32
 #define CFG_JDOM_APIKEY_SIZE  48
 #define CFG_JDOM_URL_SIZE     64
@@ -72,6 +80,13 @@
 #define CFG_FORM_EMON_NODE  FPSTR("emon_node")
 #define CFG_FORM_EMON_FREQ  FPSTR("emon_freq")
 
+#define CFG_FORM_MQTT_HOST  FPSTR("mqtt_host")
+#define CFG_FORM_MQTT_PORT  FPSTR("mqtt_port")
+#define CFG_FORM_MQTT_TOPIC   FPSTR("emon_topic")
+#define CFG_FORM_MQTT_USERNAME   FPSTR("emon_username")
+#define CFG_FORM_MQTT_PASSWORD  FPSTR("emon_password")
+#define CFG_FORM_MQTT_FREQ  FPSTR("emon_freq")
+
 #define CFG_FORM_JDOM_HOST  FPSTR("jdom_host")
 #define CFG_FORM_JDOM_PORT  FPSTR("jdom_port")
 #define CFG_FORM_JDOM_URL   FPSTR("jdom_url")
@@ -99,6 +114,19 @@ typedef struct
   uint8_t  filler[22];  							  // in case adding data in config avoiding loosing current conf by bad crc*/
 } _emoncms;
 
+
+// Config for mqtt
+typedef struct 
+{
+  char  host[CFG_MQTT_HOST_SIZE+1];     // FQDN 
+  uint16_t port;                        // Protocol port
+  char  username[CFG_MQTT_USERNAME_SIZE+1];     // username
+  char  password[CFG_MQTT_PASSWORD_SIZE+1];     // password
+  char  topic[CFG_MQTT_TOPIC_SIZE+1];     // topic
+  uint32_t freq;                        // refresh rate
+  uint8_t  filler[90];                  // in case adding data in config avoiding loosing current conf by bad crc*/
+} _mqtt;
+
 // Config for jeedom
 // 256 Bytes
 typedef struct 
@@ -125,6 +153,7 @@ typedef struct
   uint16_t ota_port;         		   // OTA port 
   uint8_t  filler[131];      		   // in case adding data in config avoiding loosing current conf by bad crc
   _emoncms emoncms;                // Emoncms configuration
+  _mqtt    mqtt;                   // mqtt configuration
   _jeedom  jeedom;                 // jeedom configuration
   uint8_t  filler1[256];           // Another filler in case we need more
   uint16_t crc;
@@ -145,4 +174,3 @@ void showConfig(void);
 
 
 #endif 
-

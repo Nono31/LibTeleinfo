@@ -62,9 +62,11 @@ Ticker blu_ticker;
 Ticker red_ticker;
 Ticker Every_1_Sec;
 Ticker Tick_emoncms;
+Ticker Tick_mqtt;
 Ticker Tick_jeedom;
 
 volatile boolean task_1_sec = false;
+volatile boolean task_mqtt = false;
 volatile boolean task_emoncms = false;
 volatile boolean task_jeedom = false;
 unsigned long seconds = 0;
@@ -115,6 +117,18 @@ Comments: Like an Interrupt, need to be short, we set flag for main loop
 void Task_emoncms()
 {
   task_emoncms = true;
+}
+
+/* ======================================================================
+Function: Task_mqtt
+Purpose : callback of emoncms ticker
+Input   : 
+Output  : -
+Comments: Like an Interrupt, need to be short, we set flag for main loop
+====================================================================== */
+void Task_mqtt()
+{
+  task_mqtt = true;
 }
 
 /* ======================================================================
@@ -769,7 +783,9 @@ void setup()
   // Emoncms Update if needed
   if (config.emoncms.freq) 
     Tick_emoncms.attach(config.emoncms.freq, Task_emoncms);
-
+    // Mqtt Update if needed
+  if (config.mqtt.freq) 
+    Tick_mqtt.attach(config.mqtt.freq, Task_mqtt);
   // Jeedom Update if needed
   if (config.jeedom.freq) 
     Tick_jeedom.attach(config.jeedom.freq, Task_jeedom);
@@ -796,6 +812,9 @@ void loop()
   if (task_1_sec) { 
     UpdateSysinfo(false, false); 
     task_1_sec = false; 
+  } else if (task_mqtt) { 
+    mqttPub();  
+    task_mqtt=false;
   } else if (task_emoncms) { 
     emoncmsPost(); 
     task_emoncms=false; 
@@ -814,4 +833,3 @@ void loop()
 
   //delay(10);
 }
-

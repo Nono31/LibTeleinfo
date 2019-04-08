@@ -238,4 +238,3 @@ boolean jeedomPost(void)
   } // if host
   return ret;
 }
-

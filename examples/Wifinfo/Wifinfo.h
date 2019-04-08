@@ -43,6 +43,7 @@ extern "C" {
 
 #include "webserver.h"
 #include "webclient.h"
+#include "mqtt.h"
 #include "config.h"
 
 
@@ -123,6 +124,7 @@ extern uint8_t rgb_brightness;
 extern unsigned long seconds;
 extern _sysinfo sysinfo;
 extern Ticker Tick_emoncms;
+extern Ticker Tick_mqtt;
 extern Ticker Tick_jeedom;
 
 
@@ -130,7 +132,7 @@ extern Ticker Tick_jeedom;
 // ===================================================
 void ResetConfig(void);
 void Task_emoncms();
+void Task_mqtt();
 void Task_jeedom();
 
 #endif
-
