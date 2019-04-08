@@ -83,9 +83,9 @@
 #define CFG_FORM_MQTT_HOST  FPSTR("mqtt_host")
 #define CFG_FORM_MQTT_PORT  FPSTR("mqtt_port")
 #define CFG_FORM_MQTT_TOPIC   FPSTR("emon_topic")
-#define CFG_FORM_MQTT_USERNAME   FPSTR("emon_username")
-#define CFG_FORM_MQTT_PASSWORD  FPSTR("emon_password")
-#define CFG_FORM_MQTT_FREQ  FPSTR("emon_freq")
+#define CFG_FORM_MQTT_USERNAME   FPSTR("mqtt_username")
+#define CFG_FORM_MQTT_PASSWORD  FPSTR("mqtt_password")
+#define CFG_FORM_MQTT_FREQ  FPSTR("mqtt_freq")
 
 #define CFG_FORM_JDOM_HOST  FPSTR("jdom_host")
 #define CFG_FORM_JDOM_PORT  FPSTR("jdom_port")
